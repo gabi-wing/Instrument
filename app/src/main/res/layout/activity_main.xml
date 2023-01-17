@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">\
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.instrument.MainActivity">
+
 
     <TextView
         android:padding="12dp"
@@ -15,37 +18,77 @@
 
     <LinearLayout
         android:id="@+id/filters"
-        android:layout_centerHorizontal="true"
+
         android:layout_below="@id/inventory"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <TextView
-            android:padding="20dp"
-            android:id="@+id/group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="17dp"
-            android:text="Group" />
 
-        <TextView
-            android:id="@+id/repair"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <LinearLayout
             android:padding="17dp"
-            android:text="Needs Repairs"
-            android:textSize="17dp" />
-
-        <TextView
-            android:padding="20sp"
-            android:id="@+id/status"
+            android:id="@+id/filter1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="17dp"
-            android:text="Status" />
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="Group" />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Woodwind"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Brass"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:padding="17dp"
+            android:id="@+id/filter2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/repair"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="Needs Repairs" />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No"/>
+        </LinearLayout>
+        <LinearLayout
+            android:padding="17dp"
+            android:id="@+id/filter3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="Status" />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Checked In"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Checked Out"/>
+
+        </LinearLayout>
 
 
 
@@ -56,7 +99,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/filters"
         android:layout_width="350dp"
-        android:layout_height="450dp">
+        android:layout_height="425dp">
 
     </ListView>
 
