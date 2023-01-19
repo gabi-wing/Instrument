@@ -95,11 +95,11 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/instruments"
+        android:id="@+id/instrumentList"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/filters"
         android:layout_width="350dp"
-        android:layout_height="425dp">
+        android:layout_height="315dp">
 
     </ListView>
 
@@ -110,7 +110,7 @@
         android:layout_alignParentBottom="true"
         android:text="Scan"
         android:layout_width="100dp"
-        android:layout_height="40dp"/>
+        android:layout_height="50dp"/>
 
 
 </RelativeLayout>

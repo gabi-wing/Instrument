@@ -23,6 +23,7 @@
 
     <CheckBox
         android:id="@+id/checkedOut"
+        android:layout_marginLeft="20dp"
         android:layout_below="@+id/instGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,6 +32,7 @@
 
     <CheckBox
         android:id="@+id/damaged"
+        android:layout_marginLeft="20dp"
         android:layout_below="@id/checkedOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,6 +54,15 @@
         android:layout_height="400dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/historyTitle"/>
+
+    <Button
+        android:id="@+id/editButton"
+        android:layout_margin="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Edit" />
 
 
 </RelativeLayout>
