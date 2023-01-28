@@ -21,6 +21,7 @@
         android:textSize="17dp"
         android:text="Instrument Group" />
 
+
     <CheckBox
         android:id="@+id/checkedOut"
         android:layout_marginLeft="20dp"
