@@ -57,13 +57,13 @@
         android:layout_below="@id/historyTitle"/>
 
     <Button
-        android:id="@+id/editButton"
+        android:id="@+id/save"
         android:layout_margin="20dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:text="Edit" />
+        android:text="Save" />
 
 
 </RelativeLayout>

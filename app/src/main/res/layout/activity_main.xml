@@ -30,7 +30,7 @@
             android:text="Filters"
             tools:ignore="MissingConstraints" />
 
-    <androidx.constraintlayout.widget.Group
+        <androidx.constraintlayout.widget.Group
         android:id="@+id/filterGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

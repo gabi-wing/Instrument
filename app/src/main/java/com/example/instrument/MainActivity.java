@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -45,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ArrayList<Instrument> instruments = new ArrayList<>();
-        instruments.add(new Instrument("Fl1","flute"));
+        ArrayList<Instrument> instruments = ListContainer.getInstruments();
+        instruments.add(new Instrument("Fl1","flute",true,false));
         instruments.add(new Instrument("Fl2","flute"));
         instruments.add(new Instrument("Sx1","saxophone"));
         instruments.add(new Instrument("Cl1","clarinet"));
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         instruments.add(new Instrument("Tr1","trombone"));
 
 
-        InstrumentAdapter adapter = new InstrumentAdapter(this, R.layout.single_intrument_item, instruments);
+        InstrumentListAdapter adapter = new InstrumentListAdapter(this, R.layout.single_intrument_item, instruments);
         ListView listView = (ListView) findViewById(R.id.instrumentList);
         listView.setAdapter(adapter);
 
@@ -63,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent singleItem = new Intent(getApplicationContext(), InstrumentInfo.class);
+                singleItem.putExtra("itemIndex",position);
                 startActivity(singleItem);
 
 

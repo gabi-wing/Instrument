@@ -11,9 +11,9 @@ import androidx.annotation.NonNull;
 
 import java.util.List;
 
-public class InstrumentAdapter extends ArrayAdapter<Instrument>{
+public class InstrumentInfoAdapter extends ArrayAdapter<Instrument>{
 
-    public InstrumentAdapter(@NonNull Context context, int resource, @NonNull List<Instrument> objects) {
+    public InstrumentInfoAdapter(@NonNull Context context, int resource, @NonNull List<Instrument> objects) {
         super(context, resource, objects);
     }
 
@@ -22,16 +22,17 @@ public class InstrumentAdapter extends ArrayAdapter<Instrument>{
 
         View currentView = convert;
         if (currentView == null)
-            currentView = LayoutInflater.from(getContext()).inflate(R.layout.single_intrument_item, parent, false);
+            currentView = LayoutInflater.from(getContext()).inflate(R.layout.activity_instrument_info, parent, false);
 
         Instrument instrument = (Instrument) getItem(position);
 
-        TextView tvId = (TextView) currentView.findViewById(R.id.idText);
+        TextView tvId = (TextView) currentView.findViewById(R.id.idNumber);
         tvId.setText(instrument.getId());
 
-        TextView tvGroup = (TextView) currentView.findViewById(R.id.groupText);
+        TextView tvGroup = (TextView) currentView.findViewById(R.id.instGroup);
         tvGroup.setText(instrument.getGroup());
 
         return currentView;
     }
 }
+
