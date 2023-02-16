@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<Instrument> instruments = ListContainer.getInstruments();
         instruments.add(new Instrument("Fl1","flute",true,false));
+        instruments.get(0).addBorrower("Ellie");
+        instruments.get(0).addBorrower("Liz");
         instruments.add(new Instrument("Fl2","flute"));
         instruments.add(new Instrument("Sx1","saxophone"));
         instruments.add(new Instrument("Cl1","clarinet"));

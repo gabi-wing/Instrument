@@ -42,7 +42,8 @@ public class InstrumentInfo extends AppCompatActivity {
         ArrayList<Instrument> instruments = ListContainer.getInstruments();
 
         // get single item from list
-        instruments.get(position);
+        Instrument currentInstrument = instruments.get(position);
+        ArrayList<String> borrowers = currentInstrument.getBorrowers();
 
         // get the UI objects
         TextView tvId = (TextView) findViewById(R.id.idNumber);
@@ -56,6 +57,11 @@ public class InstrumentInfo extends AppCompatActivity {
 
         CheckBox checkDamage = (CheckBox) findViewById(R.id.damaged);
         checkDamage.setChecked(instruments.get(position).getDamage());
+
+        ListView lvBorrowers = (ListView) findViewById(R.id.borrowerHistory);
+        ArrayAdapter<String> borrowerAdapter = new ArrayAdapter<String>(this,R.layout.single_borrower_item, borrowers);
+        lvBorrowers.setAdapter(borrowerAdapter);
+
 
         Button saveButton = (Button) findViewById(R.id.save);
         saveButton.setOnClickListener(new View.OnClickListener() {

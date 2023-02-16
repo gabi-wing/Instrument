@@ -1,5 +1,7 @@
 package com.example.instrument;
 
+import java.util.ArrayList;
+
 public class Instrument {
     String idNumber = "";
     String group = "";
@@ -19,12 +21,20 @@ public class Instrument {
         this.damaged = damaged;
     }
 
+    ArrayList<String> borrowers = new ArrayList<>();
+
     public String getId(){return idNumber;}
     public String getGroup(){return group;}
     public boolean getStatus(){return out;}
     public void setStatus(boolean out){this.out = out;}
     public boolean getDamage(){return damaged;}
     public void setDamaged(boolean damaged) {this.damaged = damaged;}
+    public ArrayList<String> getBorrowers(){return borrowers;}
+    public void addBorrower(String borrower){borrowers.add(borrower);}
+    public boolean removeBorrower(String b){return borrowers.remove(b);}
+    public String removeBorrower(int i){return borrowers.remove(i);}
+
+
 }
 
 
