@@ -9,9 +9,8 @@ public class ListContainer {
     public static ArrayList<Instrument> getInstruments(){
         if (instruments==null)
             instruments = new ArrayList<>();
-
-
         return instruments;
     }
 
+    public static void setInstruments(ArrayList<Instrument> inst){instruments = inst;}
 }

@@ -27,7 +27,8 @@ public class InstrumentListAdapter extends ArrayAdapter<Instrument>{
         Instrument instrument = (Instrument) getItem(position);
 
         TextView tvId = (TextView) currentView.findViewById(R.id.idText);
-        tvId.setText(instrument.getId());
+        Integer i = instrument.getId();
+        tvId.setText(i.toString());
 
         TextView tvGroup = (TextView) currentView.findViewById(R.id.groupText);
         tvGroup.setText(instrument.getGroup());

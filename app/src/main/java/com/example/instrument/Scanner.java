@@ -4,14 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.AudioManager;
-import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.android.gms.vision.CameraSource;
@@ -20,6 +20,7 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Scanner extends AppCompatActivity {
     private SurfaceView surfaceView;
@@ -34,16 +35,13 @@ public class Scanner extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
         surfaceView = findViewById(R.id.surface_view);
-        barcodeText = findViewById(R.id.barcode_text);
-        initialiseDetectorsAndSources();
+        init();
     }
 
-    private void initialiseDetectorsAndSources() {
-
-        //Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
+    private void init() {
 
         barcodeDetector = new BarcodeDetector.Builder(this)
-                .setBarcodeFormats(Barcode.ALL_FORMATS)
+                .setBarcodeFormats(Barcode.CODE_128)
                 .build();
 
         cameraSource = new CameraSource.Builder(this, barcodeDetector)
@@ -82,9 +80,7 @@ public class Scanner extends AppCompatActivity {
 
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
-            public void release() {
-                // Toast.makeText(getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
-            }
+            public void release() {}
 
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
@@ -97,16 +93,35 @@ public class Scanner extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            if (barcodes.valueAt(0).email != null) {
-                                barcodeText.removeCallbacks(null);
-                                barcodeData = barcodes.valueAt(0).email.address;
-                                barcodeText.setText(barcodeData);
-                            } else {
+                            // we have a value...
+                            barcodeData = barcodes.valueAt(0).displayValue;
 
-                                barcodeData = barcodes.valueAt(0).displayValue;
-                                barcodeText.setText(barcodeData);
-
+                            // get the value back to mainactivity
+                            try
+                            {
+                                MainActivity.activeID = Integer.parseInt(barcodeData);
+                                ArrayList<Instrument> instruments = ListContainer.getInstruments();
+                                for(int i=0; i<instruments.size();i++){
+                                    if(instruments.get(i).getId() == MainActivity.activeID){
+                                        Intent singleItem = new Intent(getApplicationContext(), InstrumentInfo.class);
+                                        singleItem.putExtra("itemIndex", i);
+                                        startActivity(singleItem);
+                                        finish();
+                                    }
+                                }
+                                // if i get here, the id is real number but not in my list...
+                                Intent singleItem = new Intent(getApplicationContext(), InstrumentInfo.class);
+                                singleItem.putExtra("itemIndex", -99);
+                                startActivity(singleItem);
+                                finish();
                             }
+                            catch(NumberFormatException e)
+                            {
+                                Toast.makeText(getApplicationContext(), "Barcode Format Incorrect", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
+
                         }
                     });
 
@@ -115,19 +130,5 @@ public class Scanner extends AppCompatActivity {
         });
     }
 
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        getSupportActionBar().hide();
-        cameraSource.release();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getSupportActionBar().hide();
-        initialiseDetectorsAndSources();
-    }
 
 }

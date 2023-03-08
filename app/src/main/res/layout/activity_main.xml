@@ -27,7 +27,9 @@
             android:id="@+id/filterButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="17dp"
             android:text="Filters"
+            app:layout_constraintStart_toStartOf="parent"
             tools:ignore="MissingConstraints" />
 
         <androidx.constraintlayout.widget.Group
@@ -35,43 +37,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="filter1,filter2,filter3" />
+        app:constraint_referenced_ids="filter1,filter2" />
 
-        <LinearLayout
-            android:paddingLeft="17dp"
-            android:paddingRight="17dp"
-            android:id="@+id/filter1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/filterButton"
-            tools:ignore="MissingConstraints">
-
-            <TextView
-                android:id="@+id/group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17dp"
-                android:text="Group" />
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Woodwind"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Brass"/>
-        </LinearLayout>
 
     <LinearLayout
         android:paddingLeft="14dp"
         android:paddingRight="14dp"
-        android:id="@+id/filter2"
+        android:id="@+id/filter1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:ignore="MissingConstraints"
-        app:layout_constraintStart_toEndOf="@id/filter1"
         app:layout_constraintTop_toBottomOf="@id/filterButton"
         >
 
@@ -83,25 +59,27 @@
             android:textSize="17dp" />
 
         <CheckBox
+            android:id="@+id/needs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Yes" />
 
         <CheckBox
+            android:id="@+id/none"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No" />
     </LinearLayout>
 
         <LinearLayout
-            android:paddingLeft="17dp"
+            android:paddingLeft="40dp"
             android:paddingRight="17dp"
-            android:id="@+id/filter3"
+            android:id="@+id/filter2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             tools:ignore="MissingConstraints"
-            app:layout_constraintStart_toEndOf="@id/filter2"
+            app:layout_constraintLeft_toRightOf="@id/filterButton"
             app:layout_constraintTop_toBottomOf="@id/filterButton"
             >
             <TextView
@@ -111,10 +89,12 @@
                 android:textSize="17dp"
                 android:text="Status" />
             <CheckBox
+                android:id="@+id/in"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Checked In"/>
             <CheckBox
+                android:id="@+id/out"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Checked Out"/>
@@ -123,12 +103,12 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ListView
-        android:padding="17dp"
         android:id="@+id/instrumentList"
         android:layout_width="350dp"
-        android:layout_height="315dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/filterLayout"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/filterLayout">
+        android:padding="17dp">
 
     </ListView>
 

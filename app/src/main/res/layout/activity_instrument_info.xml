@@ -11,7 +11,7 @@
         android:textSize="30dp"
         android:layout_centerHorizontal="true"/>
 
-    <TextView
+    <EditText
         android:id="@+id/instGroup"
         android:padding="12dp"
         android:layout_below="@id/idNumber"
@@ -50,12 +50,30 @@
         android:textSize="17dp"
         android:text="Borrower History" />
 
+    <TextView
+        android:id="@+id/addBorrowerTitle"
+        android:layout_below="@id/historyTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Borrower: "
+        android:padding="17dp"/>
+    <EditText
+        android:id="@+id/borrowerEdit"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/addBorrowerTitle"
+        android:layout_below="@id/historyTitle"
+        android:text=" "
+        android:padding="17dp"/>
+
     <ListView
         android:id="@+id/borrowerHistory"
         android:layout_width="350dp"
-        android:layout_height="400dp"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/historyTitle"/>
+        android:layout_below="@id/borrowerEdit"/>
+
+
 
     <Button
         android:id="@+id/save"
