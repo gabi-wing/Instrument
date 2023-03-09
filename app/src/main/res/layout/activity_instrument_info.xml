@@ -83,6 +83,14 @@
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:text="Save" />
+    <Button
+        android:id="@+id/delete"
+        android:layout_margin="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Delete" />
 
 
 </RelativeLayout>

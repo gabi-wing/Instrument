@@ -29,6 +29,7 @@ public class Scanner extends AppCompatActivity {
     private static final int REQUEST_CAMERA_PERMISSION = 201;
     private TextView barcodeText;
     private String barcodeData;
+    private int resultCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,45 +87,25 @@ public class Scanner extends AppCompatActivity {
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
+                    barcodeData = barcodes.valueAt(0).displayValue;
+                    // get the value back to mainactivity
+                    try
+                    {
+                        resultCode = Integer.parseInt(barcodeData);
 
+                    }
+                    catch(NumberFormatException e)
+                    {
+                        Toast.makeText(getApplicationContext(), "Barcode Format Incorrect", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
-                    barcodeText.post(new Runnable() {
+                }
 
-                        @Override
-                        public void run() {
-
-                            // we have a value...
-                            barcodeData = barcodes.valueAt(0).displayValue;
-
-                            // get the value back to mainactivity
-                            try
-                            {
-                                MainActivity.activeID = Integer.parseInt(barcodeData);
-                                ArrayList<Instrument> instruments = ListContainer.getInstruments();
-                                for(int i=0; i<instruments.size();i++){
-                                    if(instruments.get(i).getId() == MainActivity.activeID){
-                                        Intent singleItem = new Intent(getApplicationContext(), InstrumentInfo.class);
-                                        singleItem.putExtra("itemIndex", i);
-                                        startActivity(singleItem);
-                                        finish();
-                                    }
-                                }
-                                // if i get here, the id is real number but not in my list...
-                                Intent singleItem = new Intent(getApplicationContext(), InstrumentInfo.class);
-                                singleItem.putExtra("itemIndex", -99);
-                                startActivity(singleItem);
-                                finish();
-                            }
-                            catch(NumberFormatException e)
-                            {
-                                Toast.makeText(getApplicationContext(), "Barcode Format Incorrect", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-
-
-                        }
-                    });
-
+                if(resultCode!= 0){
+                    setResult(resultCode);
+                    barcodeDetector.release();
+                    finish();
                 }
             }
         });
