@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Group;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     public static int activeID;
     InstrumentListAdapter adapter;
     ArrayList<Instrument> instruments;
-    ArrayList<Instrument> filteredList = new ArrayList<>();
+    ArrayList<Instrument> filteredList = null;
+    DialogInterface.OnClickListener dialogClickListener;
 
     CheckBox checkYesNeed;
     CheckBox checkNoNeed;
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         tvScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent scan = new Intent(getApplicationContext(), Scanner.class);
+                Intent scan = new Intent(view.getContext(), Scanner.class);
                 startActivityForResult(scan,SCANNER_RESULTS);
             }
         });
@@ -107,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
                     listView.setAdapter(adapter);
                 }
                 else{
+                    //FIX2
+                    filteredList = null;
                     adapter = new InstrumentListAdapter(MainActivity.this, R.layout.single_intrument_item, instruments);
                     ListView listView = (ListView) findViewById(R.id.instrumentList);
                     listView.setAdapter(adapter);
@@ -125,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
                     listView.setAdapter(adapter);
                 }
                 else{
+                    //FIX2
+                    filteredList = null;
                     adapter = new InstrumentListAdapter(MainActivity.this, R.layout.single_intrument_item, instruments);
                     ListView listView = (ListView) findViewById(R.id.instrumentList);
                     listView.setAdapter(adapter);
@@ -142,6 +148,8 @@ public class MainActivity extends AppCompatActivity {
                     listView.setAdapter(adapter);
                 }
                 else{
+                    //FIX2
+                    filteredList = null;
                     adapter = new InstrumentListAdapter(MainActivity.this, R.layout.single_intrument_item, instruments);
                     ListView listView = (ListView) findViewById(R.id.instrumentList);
                     listView.setAdapter(adapter);
@@ -160,6 +168,8 @@ public class MainActivity extends AppCompatActivity {
                     listView.setAdapter(adapter);
                 }
                 else{
+                    //FIX2
+                    filteredList = null;
                     adapter = new InstrumentListAdapter(MainActivity.this, R.layout.single_intrument_item, instruments);
                     ListView listView = (ListView) findViewById(R.id.instrumentList);
                     listView.setAdapter(adapter);
@@ -167,16 +177,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         //handler for clicking items in instrument list
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent singleItem = new Intent(getApplicationContext(), InstrumentInfo.class);
-                singleItem.putExtra("itemIndex",position);
+                singleItem.putExtra("exists",true);
+
+                // FIX2
+                // figure out which list the POSITION refers to
+                if(filteredList == null)
+                    singleItem.putExtra("ID", instruments.get(position).getId());
+                else
+                    singleItem.putExtra("ID", filteredList.get(position).getId());
+
                 startActivity(singleItem);
-
-
             }
         });
 
@@ -207,8 +222,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         adapter.notifyDataSetChanged();
-
     }
+
     @Override
     protected void onStop(){
         //when it is going to save
@@ -238,19 +253,20 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode==SCANNER_RESULTS){
-            Intent singleItem = new Intent(this,InstrumentInfo.class);
+            Intent singleItem = new Intent(getApplicationContext(),InstrumentInfo.class);
             int position = getPosition(resultCode);
-            if(position== -99){
-                DialogInterface.OnClickListener  dialogClickListener = new DialogInterface.OnClickListener() {
+            if(position == -99){
+
+                dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             // on below line we are setting a click listener
                             // for our positive button
                             case DialogInterface.BUTTON_POSITIVE:
-                                // on below line we are displaying a toast message.
-                               singleItem.putExtra("itemIndex",position);
-                               singleItem.putExtra("itemID", resultCode);
+                                // FIX2
+                               singleItem.putExtra("exists",false);
+                               singleItem.putExtra("ID", resultCode);
                                startActivity(singleItem);
                                return;
                             // on below line we are setting click listener
@@ -261,10 +277,14 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 };
+
+                String prompt = "ID " +resultCode+ " was not found. Would you like to add it?";
+
+                Context c = getBaseContext();
                 // on below line we are creating a builder variable for our alert dialog
-                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 // on below line we are setting message for our dialog box.
-                builder.setMessage("ID " +resultCode+ " was not found. Would you like to add it?")
+                builder.setMessage(prompt)
                         // on below line we are setting positive button
                         // and setting text to it.
                         .setPositiveButton("Yes", dialogClickListener)

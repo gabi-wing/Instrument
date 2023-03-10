@@ -22,6 +22,8 @@ import java.util.List;
 public class InstrumentInfo extends AppCompatActivity {
     int position = -99;
     int id;
+    boolean bExists;
+
     ArrayList<String> borrowers;
     DialogInterface.OnClickListener dialogClickListener;
 
@@ -37,18 +39,25 @@ public class InstrumentInfo extends AppCompatActivity {
         if(savedInstanceState == null)
         {
             extras  = getIntent().getExtras();
-            position = extras.getInt("itemIndex", -99);
-            id = extras.getInt("itemID", 0);
+            bExists = extras.getBoolean("exists", false);
+            id = extras.getInt("ID", 0);
         }
 
 
-        if (position==-99){
+        // FIX2
+        // set position in list
+
+        if (!bExists){
         //it doesn't exist so we need to make it
             TextView tvId = (TextView) findViewById(R.id.idNumber);
-            tvId.setText(id);
+            tvId.setText(Integer.toString(id));
 
             instruments.add(new Instrument(id,""));
             position = instruments.size()-1;
+        }
+        else
+        {
+            position = findPosFromID(id);
         }
 
         //it does exist already
@@ -141,5 +150,15 @@ public class InstrumentInfo extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private int findPosFromID(int id) {
+        ArrayList<Instrument> instruments = ListContainer.getInstruments();
+
+        for(int i = 0; i < instruments.size(); i++){
+            if(instruments.get(i).getId() == id)
+                return i;
+        }
+        return -99;
     }
 }
