@@ -280,7 +280,6 @@ public class MainActivity extends AppCompatActivity {
 
                 String prompt = "ID " +resultCode+ " was not found. Would you like to add it?";
 
-                Context c = getBaseContext();
                 // on below line we are creating a builder variable for our alert dialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 // on below line we are setting message for our dialog box.
@@ -296,11 +295,10 @@ public class MainActivity extends AppCompatActivity {
                         .show();
             }
             else{
-                singleItem.putExtra("itemIndex",position);
-                singleItem.putExtra("itemID", resultCode);
+                singleItem.putExtra("exists",true);
+                singleItem.putExtra("ID", resultCode);
                 startActivity(singleItem);
             }
-
         }
     }
 

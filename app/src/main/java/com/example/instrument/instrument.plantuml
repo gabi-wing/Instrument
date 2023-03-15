@@ -1,0 +1,119 @@
+@startuml
+
+title __INSTRUMENT's Class Diagram__\n
+
+  namespace com.example.instrument {
+    class com.example.instrument.BorrowerAdapter {
+        + BorrowerAdapter()
+        + getView()
+    }
+  }
+  
+
+  namespace com.example.instrument {
+    class com.example.instrument.Instrument {
+        ~ borrowers : ArrayList<String>
+        ~ damaged : boolean
+        ~ group : String
+        ~ idNumber : int
+        ~ out : boolean
+        + Instrument()
+        + Instrument()
+        + addBorrower()
+        + addBorrowerToTop()
+        + getBorrowers()
+        + getDamage()
+        + getGroup()
+        + getId()
+        + getStatus()
+        + removeBorrower()
+        + removeBorrower()
+        + setDamaged()
+        + setGroup()
+        + setStatus()
+    }
+  }
+  
+
+  namespace com.example.instrument {
+    class com.example.instrument.InstrumentInfo {
+        ~ bExists : boolean
+        ~ borrowers : ArrayList<String>
+        ~ dialogClickListener : OnClickListener
+        ~ id : int
+        ~ position : int
+        # onCreate()
+        - findPosFromID()
+    }
+  }
+  
+
+  namespace com.example.instrument {
+    class com.example.instrument.InstrumentListAdapter {
+        + InstrumentListAdapter()
+        + getView()
+    }
+  }
+  
+
+  namespace com.example.instrument {
+    class com.example.instrument.ListContainer {
+        {static} - instruments : ArrayList<Instrument>
+        {static} + getInstruments()
+        {static} + setInstruments()
+    }
+  }
+  
+
+  namespace com.example.instrument {
+    class com.example.instrument.MainActivity {
+        {static} + activeID : int
+        ~ checkIn : CheckBox
+        ~ checkNoNeed : CheckBox
+        ~ checkOut : CheckBox
+        ~ checkYesNeed : CheckBox
+        ~ dialogClickListener : OnClickListener
+        ~ filteredList : ArrayList<Instrument>
+        ~ instruments : ArrayList<Instrument>
+        {static} - SCANNER_RESULTS : int
+        + SearchDamage()
+        + SearchStatus()
+        + getPosition()
+        + load()
+        + save()
+        # onActivityResult()
+        # onCreate()
+        # onResume()
+        # onStop()
+    }
+  }
+  
+
+  namespace com.example.instrument {
+    class com.example.instrument.Scanner {
+        {static} - REQUEST_CAMERA_PERMISSION : int
+        - barcodeData : String
+        - barcodeDetector : BarcodeDetector
+        - barcodeText : TextView
+        - cameraSource : CameraSource
+        - resultCode : int
+        - surfaceView : SurfaceView
+        # onCreate()
+        - init()
+    }
+  }
+  
+
+  com.example.instrument.Instrument .u.|> java.io.Serializable
+  com.example.instrument.BorrowerAdapter --|> android.widget.ArrayAdapter
+  com.example.instrument.InstrumentListAdapter --|> android.widget.ArrayAdapter
+  com.example.instrument.MainActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.instrument.MainActivity o-- com.example.instrument.InstrumentListAdapter : adapter
+  com.example.instrument.Scanner -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.instrument.InstrumentInfo -up-|> androidx.appcompat.app.AppCompatActivity
+
+  com.example.instrument.ListContainer *-d- com.example.instrument.Instrument
+  com.example.instrument.MainActivity o-d- com.example.instrument.ListContainer
+  com.example.instrument.InstrumentInfo o-d- com.example.instrument.BorrowerAdapter
+  com.example.instrument.InstrumentInfo o-- com.example.instrument.ListContainer
+@enduml

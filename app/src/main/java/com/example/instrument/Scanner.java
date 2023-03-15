@@ -64,8 +64,6 @@ public class Scanner extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override
@@ -77,7 +75,6 @@ public class Scanner extends AppCompatActivity {
                 cameraSource.stop();
             }
         });
-
 
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
@@ -92,14 +89,12 @@ public class Scanner extends AppCompatActivity {
                     try
                     {
                         resultCode = Integer.parseInt(barcodeData);
-
                     }
                     catch(NumberFormatException e)
                     {
                         Toast.makeText(getApplicationContext(), "Barcode Format Incorrect", Toast.LENGTH_SHORT).show();
                         return;
                     }
-
                 }
 
                 if(resultCode!= 0){
@@ -110,6 +105,4 @@ public class Scanner extends AppCompatActivity {
             }
         });
     }
-
-
 }
